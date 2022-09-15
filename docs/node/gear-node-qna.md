@@ -48,6 +48,37 @@ Summary of common questions and answers from the official Discord #node channel.
     ```shell
     sudo systemctl restart gear-node
     ```
+## Windows node stuck at block #157437
+
+> Hi! My Windows-based nodes stucked at block №157437.
+> What shall i do?
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/1016053228003151932)
+
+> hi friends. Can anybody help me with this issue? This is about win based node.
+> My Windows-based nodes stucked at block №157437.
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/1016715984251404398)
+
+> Hi. My node stuck at 157437 block. Could someone please help me? Here https://telemetry.gear-tech.io/#list/0x6f022bd353c56b3e441507e1173601fd9dc0fb7547e6a95bbaf9b21f311bcab6 I see a lot of stucks at this block
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/1018132301852450836)
+
+- **Error:** `Execution failed: Execution aborted due to trap: wasm trap: wasm unreachable instruction executed`
+
+    ```
+    2022-09-12 15:25:14.506 ERROR tokio-runtime-worker runtime: panicked at 'Storage root must match that calculated.', /Users/vadimsmirnov/.cargo/git/checkouts/substrate-e6594450811c5caa/abc1345/frame/executive/src/lib.rs:479:9
+    2022-09-12 15:25:14.509  WARN tokio-runtime-worker sc_service::client::client: Block prepare storage changes error: Error at calling runtime api: Execution failed: Execution aborted due to trap: wasm trap: wasm `unreachable` instruction executed
+    WASM backtrace:
+
+	0: 0x3ab3 - <unknown>!rust_begin_unwind
+	1: 0x15d7 - <unknown>!core::panicking::panic_fmt::h6b1842d842074d9f
+	2: 0x11e22f - <unknown>!Core_execute_block
+    ```
+
+- **Solution:** The problem was fixed so update your nodes.
+
+    You need to download node executable from https://builds.gear.rs/gear-nightly-windows-x86_64.zip and replace old executable.
 
 ## Unavailable `LOCK` file
 
