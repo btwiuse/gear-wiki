@@ -5,7 +5,19 @@ sidebar_position: 9
 
 # Gear Node Q&A
 
-Summary of common questions and answers from the official Discord #node channel.
+[Edit this page on GitHub](https://github.com/btwiuse/gear-wiki/edit/gear-node-qna/docs/node/gear-node-qna.md)
+
+Summary of common questions and answers from the official Discord [#node](https://discord.com/channels/891063355526217738/907067604928188426) channel.
+
+For questions that have already been answered in one of the pages below,
+
+- [Gear Node FAQ](https://docs.google.com/document/d/1abxQfOLR1iDQFCtTlKQST-rhGkfHX3cBuNhlhUz3pzU/)
+
+- [Node FAQ](https://gear-node-qna.vercel.app/docs/node/node-faq)
+
+- [Troubleshooting](https://gear-node-qna.vercel.app/docs/node/troubleshooting)
+
+the link to its existing answer will be placed in the solution section in order to avoid duplication.
 
 ## Verification failed for block ... rejected: too far in the future
 
@@ -113,40 +125,13 @@ Summary of common questions and answers from the official Discord #node channel.
 
 - **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet_v2/db/full/LOCK: Resource temporarily unavailable`
 
-- **Solution:** You seem to be running several Gear node instances. Note that only one node instance is allowed to run. You likely have configured the node as a service and then ran the second instance from the command line. You should either stop the service or don't run the Gear node from the command line.
-
-    You can see the current node processes by running the command:
-
-    ```shell
-    ps aux | grep gear-node
-    ```
-
-    If you want to break all node processes you may run:
-
-    ```shell
-    pkill -sigint gear-node
-    ```
-
-    Note that the SystemD service can't be stopped by the command above. Run instead:
-
-    ```shell
-    sudo systemctl stop gear-node
-    ```
+- **Solution:** Please check [existing solution](/docs/node/troubleshooting#unavailable-lock-file)
 
 ## Unexpected argument when starting the node service
 
 - **Error:** `Found argument '\' which wasn't expected, or isn't valid in this context`
 
-- **Solution:** The `gear-node.service` configuration file seems to be misconfigured. Some versions of SystemD do not accept the backslash character (`\`) as a line break. Therefore, it is better to write each of the config entry on one line.
-
-    Refer to https://wiki.gear-tech.io/node/node-as-service for properly configuring the node as a service.
-
-    Don't forget to restart the node after fixing the service configuration:
-
-    ```shell
-    sudo systemctl daemon-reload
-    sudo systemctl restart gear-node
-    ```
+- **Solution:** Please check [existing solution](/docs/node/troubleshooting#unexpected-argument-when-starting-the-node-service)
 
 ## Corrupted data base
 
@@ -154,28 +139,7 @@ Summary of common questions and answers from the official Discord #node channel.
 
 - **Alternative error:** `Invalid argument: Column families not opened: ..., col2, col1, col0`
 
-- **Solution:** The root of this problem is the lack of the disk free space. You may check the free space using the following command:
-
-    ```shell
-    df -h
-    ```
-
-    Also, you may check how many space is used by the blockchain DB:
-
-    ```shell
-    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v2/db/full
-    ```
-
-    Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the minimum disk space required.
-
-    You need to free more space then purge the chain:
-
-    ```shell
-    sudo systemctl stop gear-node
-    # Provide more free space on the disk
-    gear-node purge-chain
-    sudo systemctl start gear-node
-    ```
+- **Solution:** Please check [existing solution](/docs/node/troubleshooting#corrupted-data-base)
 
 ## Node executable file obsolescence
 
@@ -183,10 +147,10 @@ Summary of common questions and answers from the official Discord #node channel.
 
 - **Alternative error:** `runtime requires function imports which are not present on the host`
 
-- **Solution:** [Update](/docs/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
+- **Solution:** Please check [existing solution](/docs/node/troubleshooting#node-executable-file-obsolescence)
 
 ## Masked service
 
 - **Error:** `Failed to start gear-node.service: Unit gear-node.service is masked.`
 
-- **Solution:** Please check: https://askubuntu.com/questions/1017311/what-is-a-masked-service
+- **Solution:** Please check [existing solution](/docs/node/troubleshooting#masked-service)
