@@ -80,6 +80,35 @@ Summary of common questions and answers from the official Discord #node channel.
 
     You need to download node executable from https://builds.gear.rs/gear-nightly-windows-x86_64.zip and replace old executable.
 
+## Cannot allocate memory
+
+> hello everyone. I updated the node according to the latest update, but the node stopped at block 14,523,318 and there is such an error in the logs. Can you tell me what to do?
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/993119260383641630)
+
+> Error importing block 0x4ae7f75de9466c4425487186152a5f31ae7da7e0c867dfc2c8603ebbf235c86c: consensus error: Import failed: Import failed: Error at calling runtime api: Execution failed: Execution aborted due to trap: host code panicked while being called by the runtime: Failed to create new memory with sandbox: "Sandbox error: Memory: encountered failure while operating with virtual memory: System call failed: Cannot allocate memory (os error 12)
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/1016273739127734292)
+
+
+- **Error:** `Failed to create new memory with sandbox: ... System call failed: Cannot allocate memory (os error 12)`
+
+    ```
+    14:39:35 elyqq gear-node2382149]:2022-07-03 14:39:35 0 Error importing block 0xee7fd629ca528f25b46f4f3aceesc0724920157ffc86871bcaea801d31379987: consensus error: Import failed: Import failed: Error at calling runtime api: Execution failed: Excution aborted due to trap: host code panicked while being called by the runtime: Failed to create new memory with sandbox: "sandbox error Memory: System call failed: Cannot allocate memory (os error 12)" Jul 03 14:39:35 elygggear-node[2382149]: WASM backtrace:
+    14:39:35 elyqq gear-node[2382149]: 0:0x173800 <unknown>!spio::sandbox:extern host function impls::memory new::h86494df2b46f540 
+    14:39:35 elygq gear-node 12282140 1:0x743dg-<unknown>!kaear backendsandbox::env::SandboxEnvironment<e>as dear backend common::Environment<E>>::new::ha62a9b16c2aa43e8 
+    ```
+
+- **Solution:** Such error messages usually indicate insufficient memory. Upgrade your node's memory or increase swap space on your operating system.
+
+    The node could take up to 8 GB of memory during syncing. The memory consumption will decrease after blocks are synced.
+
+    So if your machine has less than 8 GB of memory, it is recommended to enable swap to prevent potential memory exhaustion.
+
+    Please refer to [Increasing the Swap Space on Ubuntu](https://askubuntu.com/questions/1066358/increasing-the-swap-space-on-ubuntu) for instructions.
+
+    For Windows, refer to [How to increase swap memory in Windows](https://superuser.com/questions/793304/how-to-increase-swap-memory-in-windows) instead.
+
 ## Unavailable `LOCK` file
 
 - **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet_v2/db/full/LOCK: Resource temporarily unavailable`
