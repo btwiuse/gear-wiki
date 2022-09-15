@@ -7,6 +7,48 @@ sidebar_position: 9
 
 Summary of common questions and answers from the official Discord #node channel.
 
+## Verification failed for block ... rejected: too far in the future
+
+> Hi guys! Please help me to understand what could be wrong, my node seems like doesn't work properly now. I'll attach a screenshot below. Too many verification failed errors.
+
+[context](https://discord.com/channels/891063355526217738/907067604928188426/1019534927827587072)
+
+- **Error:** `Verification failed for block xxxxxx received from peer: xxxxxx , Header xxxxxx rejected: too far in the future`
+
+    ```
+    10:06:37 💤 Idle (19 peers), best: #6505505 (0xe347…aa2b), finalized #6505488 (0x12e0…4fa5), ⬇ 4.8kiB/s ⬆ 220.0kiB/s
+    10:06:40 💔 Verification failed for block 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 received from peer: 12D3KooWPyu2AyUAkpK9VAh8HnraVRVg2SAGZqQwBEScz649MYiC, "Header 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 rejected: too far in the future"
+    10:06:40 ✨ Imported #6505506 (0x2564…7a99)
+    10:06:40 💔 Verification failed for block 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 received from peer: 12D3KooWQPjTpadV5n5We2kr27UDTmeMHPm53AYQ3Po26YXANDph, "Header 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 rejected: too far in the future"
+    10:06:41 💔 Verification failed for block 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 received from peer: 12D3KooWEE3iEPtkkGToXPmUfSAjps3HKEKTTLB7LPYriHxxHHcL, "Header 0xe2f7243f630c10282082a6249e349d679d770467fa3d3523212f6ccc18d49eb0 rejected: too far in the future"
+    ```
+
+- **Solution:** The clock of your machine is most likely not accurate. You should sync the time of your machine with an NTP server then restart the node.
+
+    First check your current time skew by running:
+
+    ```shell
+    ntpdate -q pool.ntp.org
+    ```
+
+    Then check the status of timesyncd by running:
+
+    ```shell
+    systemctl status systemd-timesyncd.service
+    ```
+
+    If the service is disabled enable it first:
+
+    ```shell
+    sudo systemctl start systemd-timesyncd.service
+    ```
+
+    After that, restart the node to see if the issue is gone
+
+    ```shell
+    sudo systemctl restart gear-node
+    ```
+
 ## Unavailable `LOCK` file
 
 - **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet_v2/db/full/LOCK: Resource temporarily unavailable`
